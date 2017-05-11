@@ -1,0 +1,2 @@
+
+print('fuck test')

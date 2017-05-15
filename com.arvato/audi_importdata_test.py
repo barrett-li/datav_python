@@ -181,6 +181,27 @@ def getMessageSheet(excelfile):
 
     return messageList
 
+def getAdcUserSheet(excelfile):
+    
+    table = data.sheet_by_index(6)
+    nrows = table.nrows
+    ncols = table.ncols
+    colnames =  table.row_values(0)
+    adcUserList =[]
+
+    for rownum in range(1,nrows):
+        row = table.row_values(rownum)
+        app = {}
+        for i in range(len(colnames)):
+                #print(colnames[i]+":"+str(row[i]))
+                #print()
+            app[colnames[i]] = str(row[i]) 
+        
+        #cfrTup=(row[0],row[1],row[2])
+        print(app)
+        adcUserList.append(app)
+
+    return adcUserList
 
 def clearData(connection,dailyOrder):
     
@@ -216,6 +237,10 @@ def clearData(connection,dailyOrder):
         sql = 'delete from datav_real_message where dailyorder = %s'
         cursor.execute(sql, (dailyOrder))
         
+        #极客画像
+        sql = 'delete from datav_adc_user where dailyorder = %s'
+        cursor.execute(sql, (dailyOrder))
+            
     # 没有设置默认自动提交，需要主动提交，以保存所执行的语句
     connection.commit()
 
@@ -354,6 +379,21 @@ def importMessageSheet(connection,dailyOrder,messageList):
      
     return num
 
+def importAdcUserSheet(connection,dailyOrder,adcUserList):
+    with connection.cursor() as cursor:
+        for rownum in range(0,len(adcUserList)):
+            # 执行sql语句，插入记录cfrList[rownum]
+            
+            sql = '''INSERT INTO datav_adc_user (dailyorder,customername,intentvehicle,
+            intentvehiclenumber,dealer,status) VALUES (%s, %s,%s,
+                                                        %s, %s,%s)'''
+            num  = cursor.execute(sql, (dailyOrder, adcUserList[rownum]['customername'],adcUserList[rownum]['intentvehicle'],
+                                        adcUserList[rownum]['intentvehiclenumber'],adcUserList[rownum]['dealer'],adcUserList[rownum]['status']))
+        # 没有设置默认自动提交，需要主动提交，以保存所执行的语句
+        connection.commit()
+     
+    return num
+
 if __name__ == '__main__':
 
     #excelfile="D:\\ftpfiles\\datav_import_2017-03-29.xlsx"
@@ -361,7 +401,7 @@ if __name__ == '__main__':
     yesterday_time = datetime.datetime.now() - oneday
     
     #filepath="D:\\ftpfiles\\"
-    filepath="E:\workspace\AudiDataV\import\\"
+    filepath="E:\workspace\datav_python\import\\"
     fileList =[]
     f_list = os.listdir(filepath)
     # print f_list
@@ -397,7 +437,8 @@ if __name__ == '__main__':
         print(usefulList)
         
         #ADC集客画像
-        
+        adcUserList = getAdcUserSheet(excelfile)
+        print(adcUserList)
         #各车型成交量统计
         carSaleList = getCarSaleSheet(excelfile)
         print(carSaleList)
@@ -438,6 +479,8 @@ if __name__ == '__main__':
             importCarSaleSheet(connection,dailyOrder,carSaleList)
             
             importMessageSheet(connection,dailyOrder,messageList)
+            
+            importAdcUserSheet(connection,dailyOrder,adcUserList)
             
         finally:
             connection.close();

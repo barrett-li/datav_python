@@ -1,16 +1,31 @@
 # datav_python
-audiÏîÄ¿Êı¾İµ¼ÈëËµÃ÷
+audié¡¹ç›®æ•°æ®å¯¼å…¥è¯´æ˜
+æ•°æ®å¯¼å…¥éƒ¨åˆ†çš„åå°ä»£ç æ˜¯audi_import.pyå’ŒdataImportService.pyä¸¤ä¸ªæ–‡ä»¶ï¼Œä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
+å®‰è£…æœåŠ¡
+python dataImportService.py install
+è®©æœåŠ¡è‡ªåŠ¨å¯åŠ¨
+python dataImportService.py --startup auto install 
+å¯åŠ¨æœåŠ¡
+python dataImportService.py start
+é‡å¯æœåŠ¡
+python dataImportService.py restart
+åœæ­¢æœåŠ¡
+python dataImportService.py stop
+åˆ é™¤/å¸è½½æœåŠ¡
+python dataImportService.py remove
 
-ÂÖ²¥²¿·ÖµÄºóÌ¨´úÂëÊÇauto_lunbo.pyºÍpythonservice.pyÁ½¸öÎÄ¼ş£¬Ê¹ÓÃ·½·¨ÈçÏÂ£º
-°²×°·şÎñ
-python PythonService.py install
-ÈÃ·şÎñ×Ô¶¯Æô¶¯
-python PythonService.py --startup auto install 
-Æô¶¯·şÎñ
-python PythonService.py start
-ÖØÆô·şÎñ
-python PythonService.py restart
-Í£Ö¹·şÎñ
-python PythonService.py stop
-É¾³ı/Ğ¶ÔØ·şÎñ
-python PythonService.py remove
+
+
+è½®æ’­éƒ¨åˆ†çš„åå°ä»£ç æ˜¯auto_lunbo.pyå’ŒAutoLunboService.pyä¸¤ä¸ªæ–‡ä»¶ï¼Œä½¿ç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
+å®‰è£…æœåŠ¡
+python AutoLunboService.py install
+è®©æœåŠ¡è‡ªåŠ¨å¯åŠ¨
+python AutoLunboService.py --startup auto install 
+å¯åŠ¨æœåŠ¡
+python AutoLunboService.py start
+é‡å¯æœåŠ¡
+python AutoLunboService.py restart
+åœæ­¢æœåŠ¡
+python AutoLunboService.py stop
+åˆ é™¤/å¸è½½æœåŠ¡
+python AutoLunboService.py remove

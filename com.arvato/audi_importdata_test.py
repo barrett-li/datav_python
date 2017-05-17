@@ -59,11 +59,12 @@ def getMainSheet(excelfile):
                 app['test'] = getdate2(d)
             else:
                 app[row[1]] = str(round(float(row[2])))
-        else:    
-            #fuck = float('%.2f'%(row[2]*100)) 
-            #timeprocess = str(int(fuck))+'%'
-            #app[row[1]] = str(int(fuck))+'%' 
-            app[row[1]] = row[2]
+        else:     
+            if rownum == 11:
+                salefinish = float('%.2f'%(row[2]*100)) 
+                app[row[1]] = str(int(salefinish))
+            else:
+                app[row[1]] = row[2]
         
         
         #cfrTup=(row[0],row[1],row[2])
@@ -255,10 +256,10 @@ def importMainSheet(connection,dailyOrder,mainList):
         sql = '''INSERT INTO datav_main (dailyorder,adcsales,date2,
                     totalsales,expectsales,totalleads,
                     activeleads,tostoreleads,avtiverate,
-                    tostorerate,conversionrate) VALUES (%s, %s,%s, 
+                    tostorerate,conversionrate,salefinish) VALUES (%s, %s,%s, 
                     %s,%s, %s,
                     %s, %s,%s, 
-                    %s,%s)'''
+                    %s,%s,%s)'''
         #fuck = float('%.2f'%(titleList[4]*100)) 
         #timeprocess = str(int(fuck))+'%'
 
@@ -268,7 +269,7 @@ def importMainSheet(connection,dailyOrder,mainList):
         num  = cursor.execute(sql, (dailyOrder, mainList[0].get('adcsales'),mainList[0].get('test'),
                                     mainList[0].get('totalsales'),mainList[0].get('expectsales'),mainList[0].get('totalleads'),
                                     mainList[0].get('activeleads'),mainList[0].get('tostoreleads'),mainList[0].get('avtiverate'),
-                                    mainList[0].get('tostorerate'),mainList[0].get('conversionrate')));
+                                    mainList[0].get('tostorerate'),mainList[0].get('conversionrate'),mainList[0].get('salefinish')));
                            
     # 没有设置默认自动提交，需要主动提交，以保存所执行的语句
     connection.commit()

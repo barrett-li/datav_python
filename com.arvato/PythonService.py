@@ -6,7 +6,7 @@ from auto_lunbo import AudiDataVLunBo
 
 class PythonService(win32serviceutil.ServiceFramework): 
     #服务名
-    _svc_name_ = "Audi DataV ADC集客画像"
+    _svc_name_ = "Audi DataV ADC集客画像 测试环境"
     #服务显示名称
     _svc_display_name_ = "Audi DataV ADC集客画像 测试环境"
     #服务描述

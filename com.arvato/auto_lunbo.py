@@ -109,8 +109,7 @@ class AudiDataVLunBo():
         activeNum=1
         self.logger.error("轮播开始")
         while 1:
-            #延时300秒，然后再fuck
-            time.sleep(5)
+            
             #excelfile="D:\\ftpfiles\\datav_import_2017-03-29.xlsx"
             oneday = datetime.timedelta(days=1)
             yesterday_time = datetime.datetime.now() - oneday
@@ -159,6 +158,9 @@ class AudiDataVLunBo():
             else:
                 message = 'Sorry, I cannot find the fucking file.'
 
+            #延时300秒，然后再fuck
+            time.sleep(5)
+            
 if __name__ == '__main__':
 
     AudiDataVLunBo().lunbo()

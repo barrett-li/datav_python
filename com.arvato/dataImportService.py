@@ -2,15 +2,15 @@
 import win32serviceutil 
 import win32service 
 import win32event 
-from auto_lunbo import AudiDataVLunBo
+from audi_importdata import AudiDataImport
 
-class AutoLunboService(win32serviceutil.ServiceFramework): 
+class dataImportService(win32serviceutil.ServiceFramework): 
     #服务名
-    _svc_name_ = "Audi DataV ADC集客画像 测试环境"
+    _svc_name_ = "Audi DataV DataImport 测试环境"
     #服务显示名称
-    _svc_display_name_ = "Audi DataV ADC集客画像 测试环境"
+    _svc_display_name_ = "Audi DataV DataImport 测试环境"
     #服务描述
-    _svc_description_ = "ADC集客画像，每隔300秒更换一个 "
+    _svc_description_ = "数据自动导入，每小时循环一次目录 "
 
     def __init__(self, args): 
         win32serviceutil.ServiceFramework.__init__(self, args) 
@@ -27,7 +27,7 @@ class AutoLunboService(win32serviceutil.ServiceFramework):
         
         this_file = inspect.getfile(inspect.currentframe())
         dirpath = os.path.abspath(os.path.dirname(this_file))
-        handler = logging.FileHandler(os.path.join(dirpath, "service.log"))
+        handler = logging.FileHandler(os.path.join(dirpath, "dataimportservice.log"))
         
         formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
         handler.setFormatter(formatter)
@@ -39,7 +39,7 @@ class AutoLunboService(win32serviceutil.ServiceFramework):
 
     def SvcDoRun(self):
         import time
-        AudiDataVLunBo().lunbo()
+        AudiDataImport().dataimport()
         while self.isAlive:
             self.logger.error("I am alive.")
             time.sleep(5)
@@ -55,4 +55,4 @@ class AutoLunboService(win32serviceutil.ServiceFramework):
         self.isAlive = False
 
 if __name__=='__main__': 
-    win32serviceutil.HandleCommandLine(AutoLunboService)
+    win32serviceutil.HandleCommandLine(dataImportService)

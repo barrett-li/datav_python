@@ -131,7 +131,7 @@ class AudiDataVLunBo():
                 #dailyOrder=excelfile[13:23]
                 dailyOrder=excelfile[len(excelfile)-15:len(excelfile)-5]
                 print(dailyOrder)
-                data = xlrd.open_workbook(excelfile)
+                #data = xlrd.open_workbook(excelfile)
                 
                 #test
                 #rm-bp15700osx362i054.mysql.rds.aliyuncs.com

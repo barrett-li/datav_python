@@ -419,8 +419,9 @@ class AudiDataImport():
     
     def dataimport(self):
         
-        self.logger.error("数据导入开始")
+        
         while 1:
+            self.logger.error("数据导入开始")
             #excelfile="D:\\ftpfiles\\datav_import_2017-03-29.xlsx"
             oneday = datetime.timedelta(days=1)
             yesterday_time = datetime.datetime.now() - oneday
@@ -514,7 +515,7 @@ class AudiDataImport():
             
             self.logger.error("数据导入结束") 
             #延时300秒，然后再fuck
-            time.sleep(60)   
+            time.sleep(3600)   
     
 if __name__ == '__main__':
     

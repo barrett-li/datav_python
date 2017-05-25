@@ -97,8 +97,11 @@ class AudiDataVLunBo():
             cursor.execute(setZero );
             
             setActive ="update datav_adc_user set active = 1 where dailyorder = %s and id = %s"
-            cursor.execute(setActive, (dailyOrder,activeNum));
-            
+            effectNum = cursor.execute(setActive, (dailyOrder,activeNum));
+            print("干了 ： "+str(effectNum))
+            if effectNum == 0:
+                activeNum = self.getList(connection,dailyOrder,1)
+                activeNum = self.setActvie(connection,dailyOrder,activeNum)
                 
         # 没有设置默认自动提交，需要主动提交，以保存所执行的语句
         connection.commit()
@@ -107,9 +110,9 @@ class AudiDataVLunBo():
     
     def lunbo(self):
         activeNum=1
-        self.logger.error("轮播开始")
+        
         while 1:
-            
+            self.logger.error("轮播开始：查询一次数据库记录(每小时查一次)")
             #excelfile="D:\\ftpfiles\\datav_import_2017-03-29.xlsx"
             oneday = datetime.timedelta(days=1)
             yesterday_time = datetime.datetime.now() - oneday
@@ -152,14 +155,24 @@ class AudiDataVLunBo():
                 try:
                     activeNum = self.getList(connection,dailyOrder,activeNum)
                     
-                    activeNum = self.setActvie(connection,dailyOrder,activeNum)
+                    fuckNum = 0
+                    while 1:
+                        self.logger.error("轮播开始：每fuck 720次就重新取一次数据；第"+str(fuckNum)+"次")
+                        activeNum = self.setActvie(connection,dailyOrder,activeNum)
+                        fuckNum+=1
+                        time.sleep(5)
+                        if fuckNum > 720 :
+                            self.logger.error("轮播开始：干够了720次，撤")
+                            break
+                    
+                    
                 finally:
                     connection.close();
             else:
                 message = 'Sorry, I cannot find the fucking file.'
 
             #延时300秒，然后再fuck
-            time.sleep(5)
+            #time.sleep(5)
             
 if __name__ == '__main__':
 

@@ -74,6 +74,9 @@ class AudiDataVLunBo():
             result = cursor.execute(getCfr, (dailyOrder));
             adcUserList = cursor.fetchmany(result)
             
+            if adcUserList[0]['id'] is None:
+                sleep(60)
+            
             if activeNum < adcUserList[0]['id']:
                 activeNum = adcUserList[0]['id']
             else:    
